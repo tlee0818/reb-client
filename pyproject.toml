@@ -6,11 +6,12 @@ build-backend = "setuptools.build_meta"
 name = "reb-client"
 version = "0.1.0"
 description = "Python client for 한국부동산원 R-ONE OpenAPI"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 keywords = ["korea", "api", "reb"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
