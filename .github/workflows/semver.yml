@@ -1,0 +1,48 @@
+
+name: Auto-version
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  semver:
+    name: Bump version from API signature diff
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Fine-grained PAT (Contents: Read+Write) stored as repo secret PAT.
+          # Required to push version-bump commits to a protected main branch.
+          token: ${{ secrets.PAT }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install runtime dependencies
+        run: pip install -e .
+
+      - name: Determine and apply version bump
+        id: semver
+        run: |
+          NEW_VER=$(python scripts/semver.py)
+          echo "new_version=$NEW_VER" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pyproject.toml reb_client/__init__.py
+          if git diff --staged --quiet; then
+            echo "Version unchanged — nothing to commit"
+          else
+            git commit -m "chore: bump version to ${{ steps.semver.outputs.new_version }} [skip ci]"
+            git push
+          fi
