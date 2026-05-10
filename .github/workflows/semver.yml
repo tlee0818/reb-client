@@ -39,7 +39,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pyproject.toml reb_client/__init__.py
+          git add pyproject.toml reb_or_kr_client/__init__.py
           if git diff --staged --quiet; then
             echo "Version unchanged — nothing to commit"
           else

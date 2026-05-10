@@ -18,7 +18,7 @@ import sys
 sys.path.insert(0, sys.argv[1])
 
 CLIENTS = [
-    ("reb_client.http.client", "RebClient"),
+    ("reb_or_kr_client.http.client", "RebClient"),
 ]
 
 result = {}

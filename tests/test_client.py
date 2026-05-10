@@ -4,8 +4,8 @@ import httpx
 import pytest
 import respx
 
-from reb_client.exceptions import APIKeyError, RateLimitError
-from reb_client.http.client import RebClient
+from reb_or_kr_client.exceptions import APIKeyError, RateLimitError
+from reb_or_kr_client.http.client import RebClient
 from tests.conftest import (
     FAKE_KEY,
     GET_STAT_DATA_XML,

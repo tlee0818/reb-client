@@ -2,14 +2,14 @@
 """Auto-determine semantic version bump by comparing public API against PyPI.
 
 Logic:
-  - Installs the current published reb-client from PyPI into a temp dir
+  - Installs the current published reb-or-kr-client from PyPI into a temp dir
   - Extracts public method signatures from old (PyPI) and new (this repo)
   - major: any existing method removed, existing param removed, or new required param added
   - minor: new public method(s) added (no breaking changes)
   - patch: no public API changes
 
 New version = bump(pypi_version, kind), floored at current pyproject.toml version.
-Writes new version to pyproject.toml and reb_client/__init__.py in-place.
+Writes new version to pyproject.toml and reb_or_kr_client/__init__.py in-place.
 Prints new version to stdout.
 
 Flags:
@@ -66,7 +66,7 @@ def compare(old: dict, new: dict) -> str:
 
 def get_pypi_version() -> str | None:
     try:
-        url = "https://pypi.org/pypi/reb-client/json"
+        url = "https://pypi.org/pypi/reb-or-kr-client/json"
         with urllib.request.urlopen(url, timeout=10) as resp:
             return json.loads(resp.read())["info"]["version"]
     except Exception:
@@ -105,7 +105,7 @@ def update_files(new_ver: str) -> None:
             r'(version\s*=\s*")[^"]+(")',
         ),
         (
-            ROOT / "reb_client" / "__init__.py",
+            ROOT / "reb_or_kr_client" / "__init__.py",
             r'(__version__\s*=\s*")[^"]+(")',
         ),
     ]
@@ -125,7 +125,15 @@ def main() -> None:
 
     with tempfile.TemporaryDirectory() as tmpdir:
         install = subprocess.run(
-            [sys.executable, "-m", "pip", "install", "reb-client", f"--target={tmpdir}", "--quiet"],
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "install",
+                "reb-or-kr-client",
+                f"--target={tmpdir}",
+                "--quiet",
+            ],
             capture_output=True,
         )
         if install.returncode != 0:
@@ -153,6 +161,7 @@ def main() -> None:
     new_sigs = extract_sigs(str(ROOT))
     kind = compare(old_sigs, new_sigs)
 
+    # Bump from whichever is higher — PyPI or repo — so every push always produces a new version.
     base_ver = max(semver_tuple(pypi_ver), semver_tuple(repo_ver))
     base_str = ".".join(str(x) for x in base_ver)
     new_ver = bump(base_str, kind)

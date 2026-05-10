@@ -30,4 +30,4 @@ jobs:
         run: ruff format --check .
 
       - name: pyflakes
-        run: pyflakes reb_client tests
+        run: pyflakes reb_or_kr_client tests

@@ -33,7 +33,7 @@ jobs:
         run: pip install -e . pdoc
 
       - name: Generate HTML docs
-        run: pdoc reb_client --output-dir docs/_build --no-browser
+        run: pdoc reb_or_kr_client --output-dir docs/_build --no-browser
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

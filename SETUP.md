@@ -1,4 +1,4 @@
-# reb-client — First-Run Setup
+# reb-or-kr-client — First-Run Setup
 
 Generated package requires three one-time manual steps before CI and publishing work.
 
@@ -35,7 +35,7 @@ The publish workflow uses OIDC (no stored token). Register at **https://pypi.org
 
 | Field | Value |
 |-------|-------|
-| PyPI project name | `reb-client` |
+| PyPI project name | `reb-or-kr-client` |
 | Owner | `tlee0818` |
 | Repository | `reb-client` |
 | Workflow filename | `publish.yml` |

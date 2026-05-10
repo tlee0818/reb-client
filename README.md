@@ -1,4 +1,4 @@
-# reb-client
+# reb-or-kr-client
 
 Python client for [한국부동산원 R-ONE OpenAPI](https://www.reb.or.kr/r-one/portal/openapi/openApiListPage.do) — one method per endpoint.
 
@@ -7,7 +7,7 @@ Each API endpoint is exposed as a plain Python method with a descriptive English
 ## Install
 
 ```bash
-pip install reb-client
+pip install reb-or-kr-client
 ```
 
 ## Setup
@@ -27,7 +27,7 @@ REB_API_KEY=your_api_key_here
 ## Usage
 
 ```python
-from reb_client import RebClient
+from reb_or_kr_client import RebClient
 
 client = RebClient()
 
@@ -60,7 +60,7 @@ Default page size: `100`.
 ## Error handling
 
 ```python
-from reb_client.exceptions import APIKeyError, RateLimitError, NoDataFoundError
+from reb_or_kr_client.exceptions import APIKeyError, RateLimitError, NoDataFoundError
 
 try:
     result = client.list_stat_tables()
