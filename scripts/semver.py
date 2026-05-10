@@ -157,7 +157,10 @@ def main() -> None:
     base_str = ".".join(str(x) for x in base_ver)
     new_ver = bump(base_str, kind)
 
-    print(f"PyPI: {pypi_ver}  |  repo: {repo_ver}  |  base: {base_str}  |  bump: {kind}  |  new: {new_ver}", file=sys.stderr)
+    print(
+        f"PyPI: {pypi_ver}  |  repo: {repo_ver}  |  base: {base_str}  |  bump: {kind}  |  new: {new_ver}",
+        file=sys.stderr,
+    )
     print(new_ver)
 
     if not dry_run:
