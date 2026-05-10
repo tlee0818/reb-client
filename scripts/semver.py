@@ -153,10 +153,11 @@ def main() -> None:
     new_sigs = extract_sigs(str(ROOT))
     kind = compare(old_sigs, new_sigs)
 
-    computed = bump(pypi_ver, kind)
-    new_ver = computed if semver_tuple(computed) >= semver_tuple(repo_ver) else repo_ver
+    base_ver = max(semver_tuple(pypi_ver), semver_tuple(repo_ver))
+    base_str = ".".join(str(x) for x in base_ver)
+    new_ver = bump(base_str, kind)
 
-    print(f"PyPI: {pypi_ver}  |  bump: {kind}  |  new: {new_ver}", file=sys.stderr)
+    print(f"PyPI: {pypi_ver}  |  repo: {repo_ver}  |  base: {base_str}  |  bump: {kind}  |  new: {new_ver}", file=sys.stderr)
     print(new_ver)
 
     if not dry_run:
